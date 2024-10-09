@@ -78,7 +78,8 @@ for line in toc_lines:
             page_number = match.group(2).strip()
             headings_with_numbers.append((title, page_number))
     else:
-        headings_without_numbers.append(line)
+        if 'İÇİNDEKİLER' not in line.upper():  # 'İÇİNDEKİLER' başlığını atla
+            headings_without_numbers.append(line)
 
 # Sayfa numarasız başlıkları sayfa numaralarıyla ilişkilendirme
 def match_headings_with_numbers(loose_numbers, headings_without_numbers, headings_with_numbers):
@@ -134,7 +135,7 @@ def extract_section_by_page(headings, pages):
         else:
             continue  # Eğer sayfa numarası yanlışsa, atlıyoruz
         
-        # Bir sonraki başlığa kadar olan bölüü almak için
+        # Bir sonraki başlığa kadar olan bölümü almak için
         if i + 1 < len(headings) and headings[i + 1][1] is not None:
             end_page = int(headings[i + 1][1])
             if end_page < len(pages):
